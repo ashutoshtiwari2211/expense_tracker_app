@@ -1,0 +1,7 @@
+<% layout('layouts/boilerplate') %>
+    <ul>
+        <li><a href="#">Personal Expenses</a></li>
+        <li> <a href="/api/bills/getSharedExp/<%= usr._id %>">Shared Expenses</a></li>
+        <li><a href="/api/friends/getAllFriends/<%= user._id %>">Friends</a></li>
+        <li><a href="/api/friends/exchange/<%= user._id %>">Exchanges with friends</a></li>
+    </ul>

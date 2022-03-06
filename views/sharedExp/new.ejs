@@ -1,0 +1,44 @@
+<% layout('layouts/boilerplate') %>
+
+
+    <div class="row">
+        <h1 class="text-center">Add an Expense</h1>
+        <div class="col-6 offset-3">
+            <form action="/api/bills/createSharedExp/<%= user._id %> " class="needs-validation" method="POST"
+                novalidate>
+                <div class="mb-3">
+                    <label class="form-label" for="bill_name">name:</label>
+                    <input class="form-control" type="text" name="bill_name" id="bill_name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="totalAmt">Total Expenditure(in Rupees)</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="totalAmt">&#8377;</span>
+                        <input type="text" name="totalAmt" class="form-control"
+                            aria-label="Amount (to the nearest Rupees)" placeholder="0.00" required>
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+
+                <div class="mb-2 d-flex justify-content-around">
+                    <button class="btn btn-outline-success btn-sm" type="button" id="addInp" onclick="addInput();">
+                        Add member -> </button>
+                    <button class="btn btn-outline-danger btn-sm" type="button" onclick="removeInput();">
+                        Remove member</button>
+                </div>
+                <div id="members" class="mb-3">
+                    <div class="input-group mb-2">
+                        <span class="input-group-text">username1</span>
+                        <input type="text" name="members[username1]" class="form-control" placeholder="Ron_5g" required>
+                        <span class="input-group-text">owes</span>
+                        <input type="text" name="members[username1]" class="form-control" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <button class="btn btn-warning">OK! DONE</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>

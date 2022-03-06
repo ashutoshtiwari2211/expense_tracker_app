@@ -1,0 +1,20 @@
+<% layout('layouts/boilerplate') %>
+    <h1>Register!!!</h1>
+    <form action="/api/users/register" method="POST" novalidate class="needs-validation">
+        User Name: <input type="text" name="username" required>
+        <br>
+        Password: <input type="text" name="password" required>
+        <br>
+        Email_Id: <input type="text" name="email" required>
+        <br>
+        phoneNo: <input type="number" name="phoneNo" required>
+        <br>
+        Date of Birth: <input type="text" name="dateOfBirth" required>
+        <br>
+        Gender: <input type="text" name="gender" required>
+        <br>
+        <button>Submit</button>
+
+
+
+    </form>

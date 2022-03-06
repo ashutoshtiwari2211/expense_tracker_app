@@ -1,0 +1,29 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/api/dashboard">Expenses</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" aria-current="page" href="/home">Home</a>
+                <a class="nav-link" href="/api/bills/createSharedExp">Create Shared Expenses</a>
+                <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+            </div>
+            <div class="navbar-nav ms-auto">
+                <% if(!user){ %>
+                    <a class="nav-link" href="/api/users/register">Register</a>
+                    <a class="nav-link" href="/api/users/login">Login</a>
+                    <% } else { %>
+                        <a class="nav-link" href="/api/users/getInfo/<%= user._id %>">
+                            <div class="avtar p-0">
+                                <img src="/images/<%= user.avtar %>.png" alt="User" style="height:50px; border:none">
+                            </div>
+                        </a>
+                        <a class="nav-link" href="/api/users/logout"> LogOut</a>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,88 @@
+<% layout('layouts/boilerplate') %>
+    <% if(docs.length){ %>
+
+        <h1>All Shared Expenses</h1>
+
+
+        <% for(let doc of docs){ %>
+
+            <% let author=false; %>
+                <% if(user.username==doc.author_id.username){ %>
+                    <% author=true; }%>
+
+                        <div class="card mb-5" style="width: 50rem;">
+                            <!--<img src="..." class="card-img-top" alt="...">-->
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= doc.bill_name %>
+                                </h5>
+                                <h5 class="card-title">
+                                    &#8377;<%= doc.totalAmt %>
+                                </h5>
+                                <small class="text-muted">
+                                    <%= doc.date %>
+                                </small>
+                                <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+                                <hr>
+
+
+                                <h5 class="card-title">
+                                    <% if(author==false){ %>
+                                        <%= doc.author_id.username%>
+                                            <% }else { %>
+                                                <span class="text-success">You</span>
+                                                <% } %>
+                                                    Paid &#8377;<%= doc.totalAmt %>
+                                </h5>
+                            </div>
+
+
+                            <% var sum=0; %>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <% doc.members.forEach( (mbr)=>{ %>
+                                    <li class="list-group-item">
+                                        <% if(mbr.member.username==user.username){ %>
+                                            <span class="text-danger">You</span>
+                                            <% } else{ %>
+                                                <div class="avtar">
+                                                    <img src="/images/<%= mbr.member.avtar %>.png" alt="avtar">
+                                                    <%= mbr.member.username %>
+                                                </div>
+                                                <% } %>
+
+
+
+                                                    <% if(mbr.owe){ %>
+                                                        owes &#8377; <%= mbr.owe %>
+                                                            <% if(author==true){ %>
+                                                                <form
+                                                                    action="/api/bills/updateSharedExp/<%= doc._id %>/<%= mbr._id %>?_method=PUT"
+                                                                    method="POST"><button
+                                                                        class="btn btn-sm btn-outline-danger">Settle
+                                                                        Up</button>
+                                                                </form>
+                                                                <% } %>
+                                                                    <% } else{ %>
+                                                                        <small class="text-muted">Paid</small>
+                                                                        <% } %>
+
+                                    </li>
+                                    <% sum +=parseInt(mbr.owe)%>
+                                        <% }) %>
+                                            </li>
+
+                                </ul>
+                                <% if(sum==0){ %>
+                                    <div class="card-body">
+                                        <form action="/api/bills/deleteSharedExp/<%= doc._id %>?_method=DELETE"
+                                            method="POST"><button class="btn btn-outline-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
+
+                        </div>
+                        <% }%>
+                            <% } else { %>
+                                <h1> No Expenses yet!!!!</h1>
+                                <% } %>

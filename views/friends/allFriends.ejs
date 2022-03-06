@@ -1,0 +1,98 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <div class="col-8 offset-2">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@getbootstrap">Add Friend</button>
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Add Friend</h5>
+                        </div>
+                        <form action="/api/friends/addFriend/<%= user._id %>" method="POST" novalidate
+                            class="needs-validation">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="friend_name" class="col-form-label">Friend Name:</label>
+                                    <input type="text" class="form-control" id="friend_name" name="friend_name"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exModal">
+                Lend To Friends </button>
+
+
+            <div class="modal fade" id="exModal" tabindex="-1" aria-labelledby="exModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exModalLabel">Lend
+                            </h5>
+                        </div>
+                        <form action="/api/friends/pay/<%= user._id %>" method="POST" novalidate
+                            class="needs-validation">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="friend_name" class="col-form-label">Friend Name:</label>
+                                    <input type="text" class="form-control" id="friend_name" name="friend_name"
+                                        required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="amount" class="col-form-label">Amount:</label>
+                                    <input type="text" class="form-control" id="amount" name="amount" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <% if(docs.length){ %>
+                <h1>All Friends</h1>
+                <ul class="list-group list-group-flush">
+                    <% for(let doc of docs) { %>
+                        <% let frd; %>
+                            <% if(doc.friend1.username==user.username) {%>
+                                <% frd=doc.friend2 %>
+                                    <% } else{ %>
+                                        <% frd=doc.friend1%>
+                                            <% } %>
+                                                <li class="list-group-item">
+                                                    <div class="avtar">
+                                                        <img src="/images/<%= frd.avtar %>.png" alt="">
+                                                        <%= frd.username %>
+                                                    </div>
+
+                                                </li>
+
+
+
+
+                                                <% } %>
+                </ul>
+                <% } else { %>
+                    <h2>No Friend</h2>
+                    <% } %>
+
+        </div>
+    </div>

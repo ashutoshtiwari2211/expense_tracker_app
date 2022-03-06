@@ -1,0 +1,65 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <div class="col-8 offset-2">
+            <% if(docs.length){ %>
+                <h1>Borrow And Lent Details here</h1>
+                <ul class="list-group list-group-flush">
+                    <% for(let doc of docs){ %>
+                        <% if(doc.frd1ToFrd2==0) continue;%>
+                            <li class="list-group-item">
+                                <% if(doc.friend1.username==user.username){ %>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="avtar"><img src="/images/<%= doc.friend2.avtar %>.png" alt="avtar">
+                                            <%= doc.friend2.username %>
+                                        </div>
+                                        <div>
+                                            <%= doc.updated %>
+                                        </div>
+                                        <% if(doc.frd1ToFrd2>0){ %>
+                                            <div class="text-success">You lent &#8377;<%= doc.frd1ToFrd2 %>
+                                            </div>
+                                            <form
+                                                action="/api/friends/exchangeUpdate/<%= user._id %>/<%= doc.friend2._id %>?_method=PUT"
+                                                method="POST"><button class="btn btn-sm btn-outline-danger">Settle
+                                                    Up</button>
+                                            </form>
+                                            <% } else { %>
+                                                <div class="text-danger">You borrowed &#8377;<%=
+                                                        Math.abs(doc.frd1ToFrd2) %>
+                                                </div>
+                                                <% } %>
+                                    </div>
+                                    <% } else {%>
+                                        <div class="d-flex justify-content-between">
+                                            <div class="avtar"><img src="/images/<%= doc.friend1.avtar %>.png"
+                                                    alt="avtar">
+                                                <%= doc.friend1.username %>
+                                            </div>
+                                            <div>
+                                                <%= doc.updated %>
+                                            </div>
+                                            <% if(doc.frd1ToFrd2<0){ %>
+                                                <div class="text-success">You lent &#8377;
+                                                    <%= Math.abs(doc.frd1ToFrd2) %>
+                                                </div>
+                                                <form
+                                                    action="/api/friends/exchangeUpdate/<%= user._id %>/<%= doc.friend1._id %>?_method=PUT"
+                                                    method="POST"><button class="btn btn-sm btn-outline-danger">Settle
+                                                        Up</button>
+                                                </form>
+                                                <% } else { %>
+                                                    <div class="text-danger">You borrowed
+                                                        &#8377;<%= doc.frd1ToFrd2 %>
+                                                    </div>
+                                                    <% } %>
+                                        </div>
+
+                                        <% } %>
+
+                            </li>
+                            <% }}else{ %>
+                                <h1>Nothing Found!!!!!</h1>
+                                <% } %>
+        </div>
+    </div>
