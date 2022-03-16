@@ -1,20 +1,62 @@
 <% layout('layouts/boilerplate') %>
-    <h1>Register!!!</h1>
-    <form action="/api/users/register" method="POST" novalidate class="needs-validation">
-        User Name: <input type="text" name="username" required>
-        <br>
-        Password: <input type="text" name="password" required>
-        <br>
-        Email_Id: <input type="text" name="email" required>
-        <br>
-        phoneNo: <input type="number" name="phoneNo" required>
-        <br>
-        Date of Birth: <input type="text" name="dateOfBirth" required>
-        <br>
-        Gender: <input type="text" name="gender" required>
-        <br>
-        <button>Submit</button>
+    <div class="container d-flex justify-content-center align-items-center mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow" style="width:450px">
+                    <div class="container" style="width:400px">
+                        <div class="card-body">
+                            <h5 class="card-title">Register</h5>
+                            <form action="/api/users/register" method="POST" novalidate class="needs-validation">
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Username</label>
+                                    <input class="form-control" type="text" id="username" name="username" autofocus
+                                        required>
+                                    <div class="valid-feedback">Looks Good!</div>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label" for="password">Password</label>
+                                    <input class="form-control" type="password" id="password" name="password" required>
+                                    <div class="valid-feedback">Looks Good!</div>
+                                </div>
 
+                                <div class="mb-3">
+                                    <label class="form-label" for="email">Email</label>
+                                    <input class="form-control" type="text" id="email" name="email" required>
+                                    <div class="valid-feedback">Looks Good!</div>
+                                </div>
 
-    </form>
+                                <div class="mb-3">
+                                    <label class="form-label" for="phoneNo">Phone No</label>
+                                    <input class="form-control" type="text" id="phoneNo" name="phoneNo" required>
+                                    <div class="valid-feedback">Looks Good!</div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="dateOfBirth">DOB</label>
+                                    <input class="form-control" type="date" id="dateOfBirth" name="dateOfBirth"
+                                        required>
+                                    <div class="valid-feedback">Looks Good!</div>
+                                </div>
+
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="gender" id="male">
+                                    <label class="form-check-label" for="male">
+                                        Male
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="gender" id="female" checked>
+                                    <label class="form-check-label" for="female">
+                                        Female
+                                    </label>
+                                </div>
+
+                                <div class="d-grid">
+                                    <button class="btn btn-success">Register</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
