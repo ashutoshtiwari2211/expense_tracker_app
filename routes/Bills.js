@@ -6,10 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 
 const { isAuthor, isAuthorBill } = require('../middleware');
 
-// router.get('/getPersonalExp/:email', catchAsync(async function (req, res) {
-//   const result = await billsDao.funGetPersonalExpenses(req.params.email);
-//   res.status(result.status).send(result.msg);
-// }));
+
 
 router.get('/getSharedExp/:user_id', isAuthor, catchAsync(async function (req, res) {
   const docs = await billsDao.funGetSharedExp(req.params.user_id);
@@ -36,19 +33,27 @@ router.put('/updateSharedExp/:bill_id/:subdoc_id', isAuthorBill, catchAsync(asyn
   res.redirect(`/api/bills/getSharedExp/${req.user._id}`);
 }));
 
-router.get('/delete', async function (req, res) {
-  await billsDao.funDeletePersonalExp();
-  res.send('okk')
-})
+// router.get('/delete', async function (req, res) {
+//   await billsDao.funDeletePersonalExp();
+//   res.send('okk')
+// })
 router.delete('/deleteSharedExp/:bill_id', isAuthorBill, catchAsync(async function (req, res) {
   const result = await billsDao.funDeleteSharedExp(req.params.bill_id);
   res.redirect(`/api/bills/getSharedExp/${req.user._id}`);
 }))
 
-// router.post('/createPersonalExp', catchAsync(async function (req, res) {
-//   const result = await billsDao.funCreatePersonalExp(req.body);
-//   res.status(result.status).send(result.msg);
-// }));
+
+
+
+
+router.get('/createPersonalExp', async function (req, res) {
+  res.render('personalExp/new');
+})
+router.post('/createPersonalExp/:user_id', isAuthor, catchAsync(async function (req, res) {
+  const docs = await billsDao.funCreatePersonalExp(req.body, req.user);
+  req.flash('success', "SUCCESSFULLY Added Your New Expense!!!");
+  res.redirect("/api/dashboard");
+}));
 
 // router.put('/updatePersonalExp', catchAsync(async function (req, res) {
 //   const result = await billsDao.funUpdatePersonalExp(req.query.user_id, req.query.bill_id, req.body);

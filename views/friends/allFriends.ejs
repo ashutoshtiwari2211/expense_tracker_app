@@ -2,8 +2,15 @@
 
     <div class="row">
         <div class="col-8 offset-2">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@getbootstrap">Add Friend</button>
+
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-dark me-md-2" type="button" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Add Friend</button>
+                <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#exModal">
+                    Lend To Friends </button>
+
+            </div>
 
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -30,11 +37,6 @@
                 </div>
             </div>
 
-
-
-
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exModal">
-                Lend To Friends </button>
 
 
             <div class="modal fade" id="exModal" tabindex="-1" aria-labelledby="exModalLabel" aria-hidden="true">
@@ -66,33 +68,32 @@
                 </div>
             </div>
 
-
             <% if(docs.length){ %>
-                <h1>All Friends</h1>
-                <ul class="list-group list-group-flush">
-                    <% for(let doc of docs) { %>
-                        <% let frd; %>
-                            <% if(doc.friend1.username==user.username) {%>
-                                <% frd=doc.friend2 %>
-                                    <% } else{ %>
-                                        <% frd=doc.friend1%>
-                                            <% } %>
-                                                <li class="list-group-item">
-                                                    <div class="avtar">
+                <h3 class="table-heading">Friends</h3>
+                <div class="container">
+                    <div class="d-flex flex-md-row justify-content-between mt-4 flex-column">
+                        <% for(let doc of docs) { %>
+                            <% let frd; %>
+                                <% if(doc.friend1.username==user.username) {%>
+                                    <% frd=doc.friend2 %>
+                                        <% } else{ %>
+                                            <% frd=doc.friend1%>
+                                                <% } %>
+                                                    <div class="avtar my-auto">
                                                         <img src="/images/<%= frd.avtar %>.png" alt="">
                                                         <%= frd.username %>
                                                     </div>
 
-                                                </li>
-
-
-
-
-                                                <% } %>
-                </ul>
+                                                    <% } %>
+                    </div>
+                </div>
                 <% } else { %>
-                    <h2>No Friend</h2>
+                    <h3 class="table-heading">No Friend</h3>
                     <% } %>
 
         </div>
     </div>
+
+    <a class="btn btn-light" style="position:fixed;bottom:3em;right:2em;margin:0;padding:5px 3px;"
+        href="/api/dashboard">
+        BACK</a>

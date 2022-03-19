@@ -3,11 +3,11 @@
 
     <div class="row">
         <h3 class="table-heading">Add an Expense</h3>
-        <div class="col-md-6 offset-md-3 col-8 offset-2">
-            <form action="/api/bills/createSharedExp/<%= user._id %> " class="needs-validation" method="POST"
+        <div class="col-6 offset-3">
+            <form action="/api/bills/createPersonalExp/<%= user._id %> " class="needs-validation" method="POST"
                 novalidate>
                 <div class="mb-3">
-                    <label class="form-label" for="bill_name">Name</label>
+                    <label class="form-label" for="bill_name">Name:</label>
                     <input class="form-control" type="text" name="bill_name" id="bill_name" placeholder="Birthday Cake"
                         required>
                 </div>
@@ -30,21 +30,6 @@
                         <input type="text" name="totalAmt" class="form-control"
                             aria-label="Amount (to the nearest Rupees)" placeholder="0.00" required>
                         <span class="input-group-text">.00</span>
-                    </div>
-                </div>
-                <h5 class="table-heading">Split Bill</h5>
-                <div class="mb-2 d-flex justify-content-around">
-                    <button class="btn btn-outline-success btn-sm" type="button" id="addInp" onclick="addInput();">
-                        Add member -> </button>
-                    <button class="btn btn-outline-danger btn-sm" type="button" onclick="removeInput();">
-                        Remove member</button>
-                </div>
-                <div id="members" class="mb-3">
-                    <div class="input-group mb-2">
-                        <span class="input-group-text">name1</span>
-                        <input type="text" name="members[username1]" class="form-control" placeholder="Ron" required>
-                        <span class="input-group-text">owes</span>
-                        <input type="text" name="members[username1]" class="form-control" placeholder="0.00" required>
                     </div>
                 </div>
                 <div class="mb-3 text-center">

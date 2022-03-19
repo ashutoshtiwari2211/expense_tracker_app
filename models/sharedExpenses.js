@@ -14,6 +14,11 @@ const Schema = new mongoose.Schema({
         type: String,
         require: true
     },
+    category: {
+        type: String,
+        enum: ['travel', 'food', 'clothing', 'health', 'entertainment', 'others'],
+        required: true
+    },
     totalAmt: {
         type: Number,
         required: [true, "Total Expenditure is required"]

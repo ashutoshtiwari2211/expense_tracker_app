@@ -15,7 +15,7 @@ var addInput = () => {
     var span = document.createElement("span");
     span.setAttribute("class", "input-group-text");
     const username = "username" + counter;
-    span.innerText = username;
+    span.innerText = "name" + counter;
     div.appendChild(span);
     var input = document.createElement("input");
     setAttributes(input, { "type": "text", "name": `members[${username}]`, "class": "form-control", "placeholder": "Ron_5g", "required": true })

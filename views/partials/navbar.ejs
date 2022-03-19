@@ -8,8 +8,11 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-link" aria-current="page" href="/home">Home</a>
-                <a class="nav-link" href="/api/bills/createSharedExp">Create Shared Expenses</a>
-                <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+                <% if(user) {%>
+                    <a class="nav-link" href="/api/bills/getSharedExp/<%= user._id %>">Shared Expenses</a>
+                    <a class="nav-link" href="/api/friends/getAllFriends/<%= user._id %>">Friends</a>
+                    <a class="nav-link" href="/api/friends/exchange/<%= user._id %>">Exchange with friends</a>
+                    <% } %>
             </div>
             <div class="navbar-nav ms-auto">
                 <% if(!user){ %>
@@ -18,7 +21,8 @@
                     <% } else { %>
                         <a class="nav-link" href="/api/users/getInfo/<%= user._id %>">
                             <div class="avtar p-0">
-                                <img src="/images/<%= user.avtar %>.png" alt="User" style="height:50px; border:none">
+                                <img src="/images/<%= user.avtar %>.png" alt="User"
+                                    style="height: 30px ;padding-top: 0%; padding-bottom: 0%; width:30px; border:none">
                             </div>
                         </a>
                         <a class="nav-link" href="/api/users/logout"> LogOut</a>

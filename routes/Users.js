@@ -58,9 +58,9 @@ router.get('/logout', isLoggedIn, (req, res) => {
 const { Users } = require('../models/collections');
 
 
-// router.get('/delete', async (req, res) => {
-//     const cr = await Users.findByIdAndDelete("621f2d6310a6b7d20c1094e9");
-//     res.send(cr);
-// })
+router.get('/delete', async (req, res) => {
+    const cr = await Users.findByIdAndDelete("6232eb7e90d678b6b62b896b");
+    res.send(cr);
+})
 
 module.exports = router;

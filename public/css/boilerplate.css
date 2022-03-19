@@ -1,0 +1,8 @@
+body {
+    height: 100vh;
+     /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRSMteRzj29G1moc_n_yO_C9yOAcu-OsAKvQ&usqp=CAU"); */
+    background: #f3e0e048;
+    background-size: cover;
+    background-position: center;
+}

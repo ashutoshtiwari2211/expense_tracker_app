@@ -65,7 +65,7 @@ module.exports = {
     funCreateUser: async function (body) {
         const { password } = body;
         let avtar = Math.floor(Math.random() * 6 + 1);
-        if (body.gender == "Male")
+        if (body.gender == "male")
             avtar = "men" + avtar;
         else
             avtar = "girl" + avtar;

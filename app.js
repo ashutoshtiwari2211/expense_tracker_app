@@ -34,7 +34,7 @@ app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
-const Users = require('./models/users');
+const { Users, SharedExpenses, PersonalExpenses } = require('./models/collections');
 passport.use(new LocalStrategy(Users.authenticate()));
 
 passport.serializeUser(Users.serializeUser());
@@ -70,7 +70,6 @@ mongoose.connect('mongodb://localhost:27017/ExpenseTracker' || "online link", { 
 
 const billsRoutes = require('./routes/Bills');
 const usersRoutes = require('./routes/Users');
-//const notificationsRoutes = require('./routes/Notifications');
 const friendsRoutes = require('./routes/Friends');
 
 const { isLoggedIn } = require('./middleware');
@@ -78,9 +77,12 @@ const AppError = require('./utils/AppError');
 app.use('/api/bills', isLoggedIn, billsRoutes)
 app.use('/api/users', usersRoutes);
 app.use('/api/friends', isLoggedIn, friendsRoutes);
-app.use('/api/dashboard', isLoggedIn, (req, res) => {
-    usr = req.user;
-    res.render('dashboard', usr);
+app.use('/api/dashboard', isLoggedIn, async (req, res) => {
+    const date = new Date(Date.now()).toString().slice(4, 7);
+    const data1 = await PersonalExpenses.find({ $and: [{ date: { $regex: date, $options: "i" } }, { author_id: req.user.id }] }).populate('author_id');
+    const data2 = await SharedExpenses.find({ $and: [{ date: { $regex: date, $options: "i" } }, { $or: [{ "members.member": { $eq: req.user.id } }, { author_id: req.user.id }] }] }).populate('members.member')
+        .populate('author_id');
+    res.render('dashboard', { data1, data2 });
 })
 app.use('/home', (req, res) => {
     res.render('home.ejs');

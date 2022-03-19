@@ -58,27 +58,26 @@ async function memberValidate(usr, pay) {
         return { member: user, owe: pay }
 }
 
-function createDoc(bill_name, totalAmt, auth, date) {
+function createDoc(bill_name, totalAmt, auth, date, category) {
     return {
         bill_name: bill_name,
         totalAmt: totalAmt,
         author_id: auth,
-        date: date
+        date: date,
+        category: category
     }
 }
 
 
 module.exports = {
-    // funGetPersonalExpenses: async function (emailID) {
-    //     const returnList = await getAll(collections.PERSONAL_EXPENSES, { user_id: emailID });
-    //     return sendSuccess('User expenses found', returnList);
-    // },
 
-    // funCreatePersonalExp: async function (body) {
-    //     console.log(body);
-    //     const returnList = await insertOne(collections.PERSONAL_EXPENSES, body);
-    //     return sendSuccess('User created', returnList['ops']);
-    // },
+    funCreatePersonalExp: async function (body, user) {
+        console.log(body);
+        const { bill_name, totalAmt, category } = body;
+        const date = new Date(Date.now()).toString().slice(0, 15);
+        const res = await insertOne(PersonalExpenses, createDoc(bill_name, totalAmt, user, date, category))
+        return res;
+    },
 
     funGetSharedExp: async function (user_id) {
         const returnList = await getAll(SharedExpenses, { $or: [{ "members.member": { $eq: user_id } }, { author_id: user_id }] });
@@ -88,7 +87,7 @@ module.exports = {
     funCreateSharedExp: async function (body, author) {
         const auth = await getOne(Users, { username: author.username });
 
-        const { bill_name, totalAmt, members } = body;
+        const { bill_name, totalAmt, members, category } = body;
         const date = new Date(Date.now()).toString().slice(0, 15)
         const mbr = [];
         var sum = 0;
@@ -99,7 +98,7 @@ module.exports = {
         }
         if (sum > totalAmt)
             throw new AppError('Total Sum exceeds', 400);
-        const resultList = await insertOne(SharedExpenses, createDoc(bill_name, totalAmt, auth, date))
+        const resultList = await insertOne(SharedExpenses, createDoc(bill_name, totalAmt, auth, date, category))
         mbr.forEach(el => {
             resultList.members.push(el);
         })
