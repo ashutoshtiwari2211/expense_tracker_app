@@ -49,7 +49,6 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     res.redirect('/api/dashboard');
 })
 router.get('/logout', isLoggedIn, (req, res) => {
-    req.flash('success', 'GoodBye!!!');
     req.logOut();
     res.redirect('/home');
 
