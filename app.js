@@ -121,8 +121,7 @@ app.use((err, req, res, next) => {
     const { status = 500, message = "Something Went Wrong!!!" } = err;
     res.status(status).render('error', { err });  //task: make error template
 })
-
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Server listening at ${port}`);
 })
