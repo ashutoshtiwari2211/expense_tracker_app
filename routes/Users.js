@@ -46,12 +46,13 @@ router.get('/login', (req, res) => {
 })
 router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/api/users/login' }), (req, res) => {
     req.flash('success', "Welcome Back!!!");
-    res.redirect('/home');
+    res.redirect('/api/dashboard');
 })
 router.get('/logout', isLoggedIn, (req, res) => {
+    req.flash('success', 'GoodBye!!!');
     req.logOut();
     res.redirect('/home');
-    req.flash('success', 'GoodBye!!!');
+
 })
 
 
