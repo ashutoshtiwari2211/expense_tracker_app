@@ -22,9 +22,10 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 app.use(methodOverride('_method'))
 app.use(morgan('tiny'));
 const dbUrl = process.env.DB_URL;
+const secret = process.env.SECRET || 'Thisisasecretcode';
 const store = new MongoDBStore({
     mongoUrl: dbUrl,
-    secret: 'Thisisasecretcode',
+    secret: secret,
     touchAfter: 24 * 60 * 60
 });
 
@@ -35,7 +36,7 @@ store.on("error", function (e) {
 
 const sessionConfig = {
     store: store,
-    secret: 'Thisisasecretcode',
+    secret: secret,
     resave: false,
     saveUninitialized: true,
     cookie: {
