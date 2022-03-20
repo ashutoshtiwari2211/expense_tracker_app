@@ -1,4 +1,7 @@
-const cors = require('cors');
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -11,14 +14,27 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const flash = require('connect-flash');
+const MongoDBStore = require('connect-mongo');
 
 //built-in middleware
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(methodOverride('_method'))
 app.use(morgan('tiny'));
+const dbUrl = process.env.DB_URL;
+const store = new MongoDBStore({
+    mongoUrl: dbUrl,
+    secret: 'Thisisasecretcode',
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e);
+})
+
 
 const sessionConfig = {
+    store: store,
     secret: 'Thisisasecretcode',
     resave: false,
     saveUninitialized: true,
@@ -58,8 +74,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'partials')));
 
-
-mongoose.connect('mongodb://localhost:27017/ExpenseTracker' || "online link", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Mongoose's Connection made!!!");
     })

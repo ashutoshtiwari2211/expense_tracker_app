@@ -66,3 +66,18 @@ module.exports.friendValidate = (req, res, next) => {
     else
         next();
 }
+
+module.exports.PersonalExpValidate = (req, res, next) => {
+    const expSchema = joi.object({
+        bill_name: joi.string().required(),
+        totalAmt: joi.number().min(0).required(),
+        category: joi.string().required()
+    })
+    const { error } = expSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new AppError(msg, 400);
+    }
+    else
+        next();
+}
