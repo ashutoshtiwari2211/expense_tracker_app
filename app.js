@@ -96,9 +96,7 @@ app.use('/api/friends', isLoggedIn, friendsRoutes);
 app.use('/api/dashboard', isLoggedIn, async (req, res) => {
     const date = new Date(Date.now()).toString().slice(4, 7);
     const data1 = await PersonalExpenses.find({ $and: [{ date: { $regex: date, $options: "i" } }, { author_id: req.user.id }] }).populate('author_id');
-    const data2 = await SharedExpenses.find({ $and: [{ date: { $regex: date, $options: "i" } }, { $or: [{ "members.member": { $eq: req.user.id } }, { author_id: req.user.id }] }] }).populate('members.member')
-        .populate('author_id');
-    res.render('dashboard', { data1, data2 });
+    res.render('dashboard', { data1 });
 })
 app.use('/home', (req, res) => {
     res.render('home.ejs');

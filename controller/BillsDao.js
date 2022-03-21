@@ -99,10 +99,14 @@ module.exports = {
         if (sum > totalAmt)
             throw new AppError('Total Sum exceeds', 400);
         const resultList = await insertOne(SharedExpenses, createDoc(bill_name, totalAmt, auth, date, category))
+        const res = await insertOne(PersonalExpenses, createDoc(bill_name, totalAmt - sum, auth, date, category))
         mbr.forEach(el => {
             resultList.members.push(el);
         })
-        resultList.save();
+        await resultList.save();
+        mbr.forEach(async function (el) {
+            const res = await insertOne(PersonalExpenses, createDoc(bill_name, el.owe, el.member, date, category))
+        })
         return resultList;
     },
 

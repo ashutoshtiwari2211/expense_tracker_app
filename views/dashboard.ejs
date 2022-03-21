@@ -20,7 +20,8 @@
                 </thead>
                 <tbody>
                     <% let totalSpend=0; %>
-                        <% for(let data of data2){ %>
+
+                        <% for(let data of data1){%>
                             <tr>
                                 <td>
                                     <%=data.bill_name%>
@@ -32,44 +33,11 @@
                                     <%= data.category %>
                                 </td>
                                 <td class="text-end"><span class="fw-bolder">
-                                        <% let sum=0, val=0; %>
-                                            <% data.members.forEach( (mbr)=>{ %>
-                                                <% if(user.username==mbr.member.username) {%>
-                                                    <% val=mbr.owe;%>
-                                                        <% } %>
-                                                            <% sum+=mbr.owe %>
-                                                                <% }) %>
-
-
-                                                                    <% if(user.username==data.author_id.username){ %>
-                                                                        <% totalSpend +=(data.totalAmt - sum); %>
-                                                                            <%= (data.totalAmt - sum)%>
-                                                                                <% }else{ %>
-                                                                                    <% totalSpend +=val; %>
-                                                                                        <%= val %>
-                                                                                            <% } %>
+                                        <% totalSpend +=data.totalAmt %>
+                                            <%= data.totalAmt %>
                                     </span> <i class="fa fa-ellipsis-h ms-2"></i></td>
                             </tr>
                             <% } %>
-
-
-                                <% for(let data of data1){%>
-                                    <tr>
-                                        <td>
-                                            <%=data.bill_name%>
-                                        </td>
-                                        <td>
-                                            <%= (data.date).slice(0,10) %>
-                                        </td>
-                                        <td>
-                                            <%= data.category %>
-                                        </td>
-                                        <td class="text-end"><span class="fw-bolder">
-                                                <% totalSpend +=data.totalAmt %>
-                                                    <%= data.totalAmt %>
-                                            </span> <i class="fa fa-ellipsis-h ms-2"></i></td>
-                                    </tr>
-                                    <% } %>
 
                 </tbody>
             </table>
