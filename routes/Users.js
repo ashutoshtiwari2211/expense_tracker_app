@@ -50,17 +50,12 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
 })
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logOut();
-    res.redirect('/home');
+    res.redirect('/');
 
 })
 
 
 const { Users } = require('../models/collections');
 
-
-router.get('/delete', async (req, res) => {
-    const cr = await Users.findByIdAndDelete("6232eb7e90d678b6b62b896b");
-    res.send(cr);
-})
 
 module.exports = router;

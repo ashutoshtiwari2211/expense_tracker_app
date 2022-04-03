@@ -20,7 +20,7 @@ const MongoDBStore = require('connect-mongo');
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(methodOverride('_method'))
-app.use(morgan('tiny'));
+//app.use(morgan('tiny'));
 const dbUrl = process.env.DB_URL;
 const secret = process.env.SECRET || 'Thisisasecretcode';
 const store = new MongoDBStore({
@@ -98,7 +98,7 @@ app.use('/api/dashboard', isLoggedIn, async (req, res) => {
     const data1 = await PersonalExpenses.find({ $and: [{ date: { $regex: date, $options: "i" } }, { author_id: req.user.id }] }).populate('author_id');
     res.render('dashboard', { data1 });
 })
-app.use('/home', (req, res) => {
+app.use('/', (req, res) => {
     res.render('home.ejs');
 })
 app.use('*', (req, res, next) => {

@@ -72,7 +72,6 @@ function createDoc(bill_name, totalAmt, auth, date, category) {
 module.exports = {
 
     funCreatePersonalExp: async function (body, user) {
-        console.log(body);
         const { bill_name, totalAmt, category } = body;
         const date = new Date(Date.now()).toString().slice(0, 15);
         const res = await insertOne(PersonalExpenses, createDoc(bill_name, totalAmt, user, date, category))
@@ -118,13 +117,6 @@ module.exports = {
         await bill.save();
         return bill;
     },
-
-
-    // funUpdatePersonalExp: async function (user_id, bill_id, body) {
-    //     console.log('updating record for: ', user_id);
-    //     const returnList = await updateOne(collections.PERSONAL_EXPENSES, { bill_id: parseInt(bill_id) }, body);
-    //     return sendSuccess('Personal Exp info updated', returnList['ops']);
-    // },
 
     funDeleteSharedExp: async function (bill_id) {
         const bill = await deleteOne(SharedExpenses, { "_id": { $eq: ObjectId(bill_id) } });

@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const billsDao = require('../controller/BillsDao');
-const AppError = require('../utils/AppError');
 const catchAsync = require('../utils/catchAsync');
 
 
@@ -19,7 +18,6 @@ router.get('/createSharedExp', async function (req, res) {
 
 
 router.post('/createSharedExp/:user_id', isAuthor, catchAsync(async function (req, res) {
-  console.log(req.body)
   const docs = await billsDao.funCreateSharedExp(req.body, req.user);
   req.flash('success', "SUCCESSFULLY Added Your New Expense!!!");
   res.redirect(`/api/bills/getSharedExp/${req.user._id}`);
@@ -29,7 +27,6 @@ router.put('/updateSharedExp/:bill_id/:subdoc_id', isAuthorBill, catchAsync(asyn
   const { bill_id, subdoc_id } = req.params;
   const docs = await billsDao.funUpdateSharedExp(bill_id, subdoc_id);
   req.flash('success', 'Settled up Successfully');
-  //res.status(result.status)
   res.redirect(`/api/bills/getSharedExp/${req.user._id}`);
 }));
 
